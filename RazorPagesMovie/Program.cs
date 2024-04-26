@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using RazorPagesMovie.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<RazorPagesMovieContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RazorPagesMovieContext") ?? throw new InvalidOperationException("Connection string 'RazorPagesMovieContext' not found.")));
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseSqlServer(builder.Configuration.GetConnectionString));
+
+var connectionStr = builder.Configuration.GetConnectionString("Default");
+Console.WriteLine("Connection string: {0}", connectionStr);
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionStr));
+
+
 
 var app = builder.Build();
 

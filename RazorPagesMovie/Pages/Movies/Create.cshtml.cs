@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorPagesMovie.Data;
 using RazorPagesMovie.Models;
 
@@ -12,9 +7,9 @@ namespace RazorPagesMovie.Pages.Movies
 {
     public class CreateModel : PageModel
     {
-        private readonly RazorPagesMovie.Data.RazorPagesMovieContext _context;
+        private readonly AppDbContext _context;
 
-        public CreateModel(RazorPagesMovie.Data.RazorPagesMovieContext context)
+        public CreateModel(AppDbContext context)
         {
             _context = context;
         }
@@ -35,7 +30,7 @@ namespace RazorPagesMovie.Pages.Movies
                 return Page();
             }
 
-            _context.Movie.Add(Movie);
+            _context.Movies.Add(Movie);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
